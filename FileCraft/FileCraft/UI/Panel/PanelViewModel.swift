@@ -16,7 +16,7 @@ final class PanelViewModel: ObservableObject {
     private(set) var nodes: [Node] = []
     @Published
     private(set) var error: Error?
-    private var current: Node = FileNode("/")!
+    private var current: Node = FileNode("file:///")!
 
     var path: String {
         current.path ?? "Unknown Location"

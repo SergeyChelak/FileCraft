@@ -22,7 +22,7 @@ public final class NativeFileSystem: FileSystem {
     }
     
     public func isSupported(_ node: any FileCraftCore.Node) -> Bool {
-        return node.url?.isFileURL == true
+        node.url?.scheme == "file"
     }
     
     public func create(_ node: any FileCraftCore.Node) -> Result<(), any Error> {
@@ -34,9 +34,9 @@ public final class NativeFileSystem: FileSystem {
     }
     
     public func list(at node: any FileCraftCore.Node) -> Result<[any FileCraftCore.Node], any Error> {
-//        guard isSupported(node), node.type == .directory else {
-//            return .failure(FileSystemError.directoryExpected)
-//        }
+        guard isSupported(node), node.type == .directory else {
+            return .failure(FileSystemError.directoryExpected)
+        }
         
         guard let url = node.url else {
             return .failure(FileSystemError.badUrl)

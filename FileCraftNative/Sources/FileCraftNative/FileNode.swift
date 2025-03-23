@@ -35,7 +35,7 @@ public final class FileNode: Node {
     }
     
     public var type: FileCraftCore.NodeType {
-        location.isDirectory ? .directory : .file
+        location.hasDirectoryPath ? .directory : .file
     }
     
     public var size: FileCraftCore.NodeSize {
