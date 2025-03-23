@@ -47,6 +47,8 @@ public final class FileNode: Node {
     }
     
     public func levelUp() -> (any FileCraftCore.Node)? {
-        fatalError()
+        let url = location
+            .deletingLastPathComponent()
+        return FileNode(url)
     }
 }
