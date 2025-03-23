@@ -14,7 +14,8 @@ final class PanelViewModel: ObservableObject {
     
     @Published
     private(set) var nodes: [Node] = []
-    
+    @Published
+    private(set) var error: Error?
     private var current: Node = FileNode("/")!
 
     var path: String {
@@ -39,6 +40,7 @@ final class PanelViewModel: ObservableObject {
                 cursorAt = self.nodes.first
                 current = node
             case .failure(let error):
+                self.error = error
                 print(error)
             }
         }
@@ -64,5 +66,9 @@ final class PanelViewModel: ObservableObject {
     
     func isSelected(_ node: Node) -> Bool {
         cursorAt?.url == node.url
+    }
+    
+    func dismissError() {
+        self.error = nil
     }
 }

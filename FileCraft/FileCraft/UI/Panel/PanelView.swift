@@ -20,6 +20,7 @@ struct PanelView: View {
                 } label: {
                     Image(systemName: "arrowshape.turn.up.left.fill")
                         .rotationEffect(.degrees(90))
+                        .scaleEffect(x: -1, y: 1)  // flip horizontally
                 }
                 Spacer()
                 Text(viewModel.path)
@@ -52,6 +53,9 @@ struct PanelView: View {
             Rectangle()
                 .stroke(.white, lineWidth: 2)
         )
+        .overlay {
+          errorView()
+        }
         .task {
             await viewModel.load()
         }
@@ -68,6 +72,18 @@ struct PanelView: View {
     private func color(_ node: Node) -> Color {
         node.type == .directory ? .yellow : .white
     }
+    
+    private func errorView() -> AnyView {
+        guard let error = viewModel.error else {
+            return AnyView(EmptyView())
+        }
+        let view = ErrorView(
+            error: error,
+            completion: viewModel.dismissError
+        )
+        return AnyView(view)
+    }
+
 }
 
 #Preview {

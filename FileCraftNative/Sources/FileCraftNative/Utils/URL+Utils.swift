@@ -8,6 +8,7 @@
 import Foundation
 
 extension URL {
+    // that isn't working correctly
     var isDirectory: Bool {
         (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
     }
