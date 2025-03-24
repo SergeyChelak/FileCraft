@@ -13,9 +13,13 @@ public enum WriteMode {
     case append, overwrite
 }
 
+public enum ExistType: Equatable {
+    case directory, file, notFound
+}
+
 public protocol FileSystem {
     var name: String { get }
-    func isExists(_ node: Node) -> Bool
+    func exist(_ node: Node) -> ExistType
     func isSupported(_ node: Node) -> Bool
     func create(_ node: Node) -> Result<(), Error>
     func delete(_ node: Node) -> Result<(), Error>

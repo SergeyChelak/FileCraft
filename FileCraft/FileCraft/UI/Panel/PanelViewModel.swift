@@ -46,12 +46,16 @@ final class PanelViewModel: ObservableObject {
         }
     }
     
+    func isDirectory(_ node: Node) -> Bool {
+        fileSystem.exist(node) == .directory
+    }
+    
     func singleTap(_ node: Node) {
         cursorAt = node
     }
     
     func doubleTap(_ node: Node) {
-        guard node.type == .directory else {
+        guard isDirectory(node) else {
             return
         }
         Task { await load(node) }

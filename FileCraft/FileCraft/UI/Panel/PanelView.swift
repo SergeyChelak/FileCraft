@@ -66,11 +66,11 @@ struct PanelView: View {
     }
     
     private func fontWeight(_ node: Node) -> Font.Weight {
-        node.type == .directory ? .bold : .light
+        viewModel.isDirectory(node) ? .bold : .light
     }
     
     private func color(_ node: Node) -> Color {
-        node.type == .directory ? .yellow : .white
+        viewModel.isDirectory(node) ? .yellow : .white
     }
     
     private func errorView() -> AnyView {

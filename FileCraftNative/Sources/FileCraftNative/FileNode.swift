@@ -34,10 +34,6 @@ public final class FileNode: Node {
         location.lastPathComponent
     }
     
-    public var type: FileCraftCore.NodeType {
-        location.hasDirectoryPath ? .directory : .file
-    }
-    
     public var size: FileCraftCore.NodeSize {
         fatalError()
     }

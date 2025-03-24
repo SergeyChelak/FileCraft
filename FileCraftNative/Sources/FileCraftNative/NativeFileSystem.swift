@@ -13,12 +13,15 @@ public final class NativeFileSystem: FileSystem {
         "Local File Storage"
     }
     
-    public func isExists(_ node: any FileCraftCore.Node) -> Bool {
+    public func exist(_ node: any FileCraftCore.Node) -> FileCraftCore.ExistType {
         guard let path = node.path else {
-            return false
+            return .notFound
         }
-        // TODO: add check if node type is matches a founded dir/file
-        return fileManager.fileExists(atPath: path)
+        var isDirectory: ObjCBool = true
+        guard fileManager.fileExists(atPath: path, isDirectory: &isDirectory) else {
+            return .notFound
+        }
+        return isDirectory.boolValue ? .directory : .file
     }
     
     public func isSupported(_ node: any FileCraftCore.Node) -> Bool {
@@ -34,7 +37,7 @@ public final class NativeFileSystem: FileSystem {
     }
     
     public func list(at node: any FileCraftCore.Node) -> Result<[any FileCraftCore.Node], any Error> {
-        guard isSupported(node), node.type == .directory else {
+        guard isSupported(node), exist(node) == .directory else {
             return .failure(FileSystemError.directoryExpected)
         }
         
